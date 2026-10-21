@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pata Fists</title>
+    <link rel="stylesheet" href="style.css">
+    <script type="module" src="main.js"></script>
+</head>
+<body>
+    <header>
+        <h1>Pata Fists</h1>
+        <p>Thrifted fashion, great prices!</p>
+    </header>
+
+    <main>
+        <section aria-labelledby="form-title" class="card">
+            <h2 id="form-title">Add/Edit Item</h2>
+            <form id="item-form">
+                <input type="hidden" name="id"/>
+
+                <label for="name">Item Name</label>
+                <input type="text" id="name" name="name" />
+
+                <label for="category">Category</label>
+                <select id="category" name="category">
+                    <option>Jackets</option>
+                    <option>Dresses</option>
+                    <option>Shirts</option>
+                    <option>Trousers</option>
+                </select>
+            
+                <label for="size">Size</label>
+                <input type="text" id="size" name="size" />
+
+                <label for="price">Price (KSh)</label>
+                <input type="number" id="price" name="price" />
+
+                <button type="submit" class="primary">Save Item</button>
+                <button type="button" id="cancel-button" class="secondary">Clear</button>
+            </form>
+        </section>
+
+        <section aria-labelledby="shop-title">
+        <h2 id="shop-title">Shop</h2>
+
+<label for="filter">Filter by Category</label>
+<select id="filter">
+    <option>All</option>
+    <option>Jackets</option>
+    <option>Dresses</option>
+    <option>Shirts</option>
+    <option>Trousers</option>
+</select>
+
+<p id="message" role="status"></p>
+<div id="item-list"></div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2024 Pata Fists. All rights reserved.</p>
+    </footer>   
+</body>
+</html>

@@ -24,11 +24,24 @@ main {
     grid-template-columns: 1fr 1fr;
 }
 
-.card, .item {
+.card, .item, .order {
     background: white;
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+#cart-list {
+    padding-left: 12px;
+}
+
+#order-list {
+    display: grid;
+    gap: 12px;
+}
+
+.order select {
+    width: auto;
 }
 
 form label {

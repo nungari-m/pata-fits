@@ -1,0 +1,15 @@
+{
+    "name": "pata-fits",
+    "version": "1.0.0",
+    "type": "module",
+    "scripts": {
+        "start": "json-server --watch db.json --port 3000",
+        "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js --coverage"
+    },
+    "dependencies": {
+        "json-server": "0.17.4"
+    },
+    "devDependencies": {
+        "jest": "^29.7.0"
+    }
+}

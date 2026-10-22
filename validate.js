@@ -19,10 +19,10 @@ export function calculateTotal(items) {
 }
 
 export function validateOrder(order, cart) {
-    const errors = []:
+    const errors = [];
 
     if (cart.length === 0) {
-        errors.push("Your cart is empty."):
+        errors.push("Your cart is empty.");
     }
 
     if (!order.customer || order.customer.trim().length < 2) {

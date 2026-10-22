@@ -1,5 +1,11 @@
 * {box-sizing: border-box;}
 
+:root {
+    --green: #0a331e;
+    --orange: #ce5803;
+    --cream: #f6f1e7;
+}
+
 body {
     font-family: Arial, sans-serif;
     margin: 0;

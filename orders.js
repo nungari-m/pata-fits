@@ -1,4 +1,4 @@
-import { addOrder, getOrders, updateOrderStatus, deleteOrder, markSold } from "./api.js";
+import { addOrder, getOrders, updateOrderStatus, deleteOrder, markSold, updateItem } from "./api.js";
 import { validateOrder, calculateTotal } from "./validate.js";
 
 const STATUSES = ["Pending", "Confirmed", "Ready", "Completed"];
@@ -6,7 +6,7 @@ const STATUSES = ["Pending", "Confirmed", "Ready", "Completed"];
 const cartList = document.querySelector("#cart-list");
 const cartTotal = document.querySelector("#cart-total");
 const orderForm = document.querySelector("#order-form");
-const orderlist = document.querySelector("#order-list");
+const orderList = document.querySelector("#order-list");
 const orderMessage = document.querySelector("#order-message");
 
 let cart = [];
@@ -18,14 +18,14 @@ function showOrderMessage(text, iserror = false) {
 }
 
 //---------Cart---
-export function addtoCart(item) {
+export function addToCart(item) {
     if (cart.some((i) => i.id === item.id)) {
-        showOrderMessage("That item is alredy in your cart.", true);
+        showOrderMessage("That item is already in your cart.", true);
         return;
     }
     cart.push(item);
     renderCart();
-    showOrderMessage(item.name + "added to cart.");
+    showOrderMessage(item.name + " added to cart.");
 }
 
 function renderCart() {
@@ -57,7 +57,7 @@ orderForm.addEventListener("submit", async (event) => {
     const data = Object.fromEntries(new FormData(orderForm));
     const errors = validateOrder(data, cart);
     if (errors.length > 0) {
-        showOrderMessage(errors.join(""), true);
+        showOrderMessage(errors.join(" "), true);
         return;
     }
     
@@ -71,14 +71,34 @@ const order = {
 };
 
 try {
-    await addOrder(order);
-    await Promise.all(cart.map((i) => markSold(i.id)));
+    const savedOrder = await addOrder(order);
+    if (savedOrder?.id == null) {
+        throw new Error("The API did not return the created order.");
+    }
+
+    const results = await Promise.allSettled(cart.map((item) => markSold(item.id)));
+    const soldItems = cart.filter((item, index) => results[index].status === "fulfilled");
+    if (results.some((result) => result.status === "rejected")) {
+        const rollbackResults = await Promise.allSettled([
+            deleteOrder(savedOrder.id),
+            ...soldItems.map((item) => updateItem(item.id, { ...item, sold: false })),
+        ]);
+        const rollbackFailed = rollbackResults.some((result) => result.status === "rejected");
+        showOrderMessage(
+            rollbackFailed
+                ? "Order failed, and some changes could not be rolled back. Refresh and check the order and items."
+                : "Could not mark all items sold. The order was cancelled.",
+            true
+        );
+        await Promise.all([reloadItems(), loadOrders()]);
+        return;
+    }
+
     cart = [];
     renderCart();
     orderForm.reset();
     showOrderMessage("Order placed! Status: Pending.");
-    reloadItems();
-    loadOrders();
+    await Promise.all([reloadItems(), loadOrders()]);
 } catch (error) {
     showOrderMessage("Could not place order. Try again.", true);
 }
@@ -86,19 +106,24 @@ try {
 
 //---Track orders-----
 async function loadOrders() {
+    orderList.textContent = "Loading orders...";
     try {
         const orders = await getOrders();
+        if (!Array.isArray(orders)) {
+            throw new Error("The orders API response was not a list.");
+        }
         renderOrders(orders);
     } catch (error) {
+        orderList.textContent = "Could not load orders. Check the API connection and try again.";
         showOrderMessage("Could not load orders.", true);
     }
 }
 
 function renderOrders(orders) {
-    orderlist.replaceChildren();
+    orderList.replaceChildren();
 
     if (orders.length === 0) {
-        orderlist.textContent = "No orders yet.";
+        orderList.textContent = "No orders yet.";
         return;
     }
 
@@ -110,7 +135,7 @@ function renderOrders(orders) {
         title.textContent = `Order #${order.id} - ${order.customer}`;
 
         const details = document.createElement("p");
-        details.textContent = `${order.itemIds.length} item(s) | KSh ${order.total} | ${order.phone}`;
+        details.textContent = `${Array.isArray(order.itemIds) ? order.itemIds.length : 0} item(s) | KSh ${order.total} | ${order.phone}`;
 
         const select = document.createElement("select");
         STATUSES.forEach((status) => {
@@ -142,7 +167,7 @@ function renderOrders(orders) {
     });
 
     card.append(title, details, select, deletBtn);
-    orderlist.append(card);
+    orderList.append(card);
 });
 
 }

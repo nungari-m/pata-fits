@@ -1,5 +1,5 @@
 import { beforeEach, jest } from "@jest/globals";
-import { getOrders, addOrder, updateOrderStatus, deleteOrder } from "./api.js";
+import { getOrders, addOrder, updateOrderStatus, deleteOrder, deleteItem } from "./api.js";
 
 beforeEach(() => {
     global.fetch = jest.fn(() => 
@@ -25,5 +25,11 @@ test("updateOrderStatus uses PATCH with new status", async () => {
 
 test("deleteOrder uses DELETE", async () => {
     await deleteOrder(1);
+    expect(fetch.mock.calls[0][1].method).toBe("DELETE");
+});
+
+test("deleteItem uses the items endpoint and DELETE", async () => {
+    await deleteItem(1);
+    expect(fetch.mock.calls[0][0]).toContain("/items/1");
     expect(fetch.mock.calls[0][1].method).toBe("DELETE");
 });

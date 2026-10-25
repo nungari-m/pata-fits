@@ -1,4 +1,23 @@
-import { calculateTotal, validateOrder } from "./validate";
+import { calculateTotal, validateItem, validateOrder } from "./validate.js";
+
+describe("validateItem", () => {
+    test("accepts a valid item", () => {
+        expect(validateItem({ name: "Denim jacket", size: "M", price: "500" })).toEqual([]);
+    });
+
+    test.each(["", "0", "-10", "not a price"])("rejects invalid price %s", (price) => {
+        expect(validateItem({ name: "Denim jacket", size: "M", price })).toContain(
+            "Price must be greater than 0."
+        );
+    });
+
+    test("reports missing name and size", () => {
+        expect(validateItem({ name: "", size: "", price: "500" })).toEqual([
+            "Name must be at least 3 characters.",
+            "Size is required.",
+        ]);
+    });
+});
 
 describe("validateOrder", () => {
     const cart = [{ id: 1, price: 500 }];

@@ -1,12 +1,12 @@
-import {getItems, addItem, updateItem, deleteItem } from "./api.js";
-import {validateItem } from "./validate.js";
+import { getItems, addItem, updateItem, deleteItem } from "./api.js";
+import { validateItem } from "./validate.js";
 import { addToCart, initOrders } from "./orders.js";
 
 const list = document.querySelector("#item-list");
 const form = document.querySelector("#item-form");
 const message = document.querySelector("#message");
 const filter = document.querySelector("#filter");
-const cancelBtn = document.querySelector("#cancel-btn");
+const cancelButton = document.querySelector("#cancel-button");
 
 let items = [];
 
@@ -28,7 +28,7 @@ async function loadItems() {
 
 function render() {
     list.replaceChildren();
-    const category = filter.ariaValueMax;
+    const category = filter.value;
     const shown = category === "All" ? items : items.filter((i) => i.category === category );
 
     if (shown.length === 0) {
@@ -50,6 +50,15 @@ function createCard(item) {
     const card = document.createElement("article");
     card.className = item.sold ? "item sold" : "item";
 
+    if (item.imageUrl) {
+        const image = document.createElement("img");
+        image.className = "item-image";
+        image.src = item.imageUrl;
+        image.alt = item.name;
+        image.loading = "lazy";
+        card.append(image);
+    }
+
     const title = document.createElement("h3");
     title.textContent = item.name;
 
@@ -69,13 +78,14 @@ function createCard(item) {
     return card;
 }
 
-async function handleBuy(id) {
+async function handleDelete(id) {
     try {
-        await markSold(id);
-        showMessage("Item marked as sold!");
-        loadItems();
+        await deleteItem(id);
+        items = items.filter((item) => item.id !== id);
+        render();
+        showMessage("Item deleted.");
     } catch (error) {
-        showMessage("Could not complete purchase.", true);
+        showMessage("Could not delete item.", true);
     }
 }
 
@@ -83,7 +93,7 @@ function fillForm(item) {
     form.elements.id.value = item.id;
     form.elements.name.value = item.name;
     form.elements.category.value = item.category;
-    form.elements.size.value = item.value;
+    form.elements.size.value = item.size;
     form.elements.price.value = item.price;
     window.scrollTo({ top: 0, behavior: "smooth" });
 }
@@ -94,7 +104,7 @@ form.addEventListener("submit", async (event) => {
     const data = Object.fromEntries(new FormData(form));
     const errors = validateItem(data);
     if (errors.length > 0) {
-        showMessage(errors.join(""), true);
+        showMessage(errors.join(" "), true);
         return;
     }
     
@@ -110,6 +120,7 @@ try {
     if (data.id) {
         const existing = items.find((i) => String(i.id) === data.id);
         item.sold = existing ? existing.sold : false;
+        if (existing?.imageUrl) item.imageUrl = existing.imageUrl;
         await updateItem(data.id, item);
         showMessage("Item updated!");
     } else {
@@ -119,14 +130,14 @@ try {
 
     form.reset();
     form.elements.id.value = "";
-    loadItems();
+    await loadItems();
 } catch (error) {
     showMessage("Could not save item.", true);    
 }
 
 });
 
-cancelBtn.addEventListener("click", () => {
+cancelButton.addEventListener("click", () => {
     form.reset();
     form.elements.id.value = "";
 });
@@ -137,4 +148,3 @@ document.addEventListener("DOMContentLoaded", () => {
     loadItems();
     initOrders(loadItems);
 });
-

@@ -30,7 +30,7 @@ Pata Fits is a website for buying and selling thrifted clothes.You can browse it
   `git clone https://github.com/nungari-m/pata-fits.git`
 2. Install packages: `npm install`
 3. Start the API: `npm start`
-4. Open `index.html` with VS Code Live Server
+4. Open `index.html` with VS Code Live Server. In production, set the `api-base-url` meta tag in `index.html` to the deployed API origin if the API is hosted separately. Leave it blank when the API shares the website's origin.
 5. Run the tests: `npm test`
 
 ## API endpoints
@@ -40,7 +40,7 @@ Pata Fits is a website for buying and selling thrifted clothes.You can browse it
 | POST | /items | Add an item |
 | PUT | /items/:id | Edit an item |
 | PATCH | /items/:id | Mark an item as sold |
-| DELETE | /item/:id | Delete an item |
+| DELETE | /items/:id | Delete an item |
 | GET | /orders | Get all orders |
 | POST | /orders | Place an order |
 | PATCH | /orders/:id | Change order status |
@@ -48,6 +48,8 @@ Pata Fits is a website for buying and selling thrifted clothes.You can browse it
 
 ## Note
 The API is hosted on a free plan, so it can take about a minute to wake up. Data may also reset when the server restarts.
+
+Order creation attempts to roll back the order and any item updates if marking all items sold fails. Because json-server does not provide database transactions, this cannot prevent conflicting orders from simultaneous users; production deployments should enforce order and inventory updates in a transactional backend.
 
 ## Author
 Martha Nungari, Moringa School

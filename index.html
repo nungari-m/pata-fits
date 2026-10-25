@@ -3,9 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="api-base-url" content="">
     <title>Pata Fits</title>
     <link rel="stylesheet" href="style.css">
-    <script type="module" src="js/main.js"></script>
+    <script type="module" src="./main.js"></script>
 </head>
 <body>
     <header>
@@ -41,7 +42,7 @@
             </form>
         </section>
 
-        <section aria-labelledby="shop-title">
+        <section aria-labelledby="shop-title" class="card">
         <h2 id="shop-title">Shop</h2>
 
 <label for="filter">Filter by Category</label>
@@ -74,9 +75,9 @@
             <p id="order-message" role="status"></p>
         </section>
 
-        <section aria-labelledby="orders-title">
+        <section aria-labelledby="orders-title" class="card">
             <h2 id="orders-title">Track Orders</h2>
-            <div id="order-list"></div>
+            <div id="order-list" aria-live="polite">Loading orders...</div>
         </section>
                 </main>
 

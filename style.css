@@ -6,8 +6,8 @@
 body {
     font-family: Arial, sans-serif;
     margin: 0;
-    background: cream;
-    color: black;
+    background: #fffaf0;
+    color: #222;
 }
 
 header {
@@ -19,15 +19,17 @@ header {
 
 
 main {
-    padding: 20px 40px;
+    max-width: 1440px;
+    padding: 20px 24px;
     align-items: start;
-    margin: 80PX;
-    display: flex;
-    gap: 100px;
-    grid-template-columns: 380px 1fr;
+    margin: 24px auto;
+    display: grid;
+    gap: 24px;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
 .card, .item, .order {
+    min-width: 0;
     background: whitesmoke;
     padding: 20px;
     border-radius: 8px;
@@ -94,6 +96,16 @@ button {
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
 }
 
+.item-image {
+    display: block;
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    border-radius: 4px;
+    margin-bottom: 16px;
+    background: #eee;
+}
+
 .sold { 
     opacity: 0.6;
 }
@@ -111,4 +123,12 @@ footer {
     color: whitesmoke;
     padding: 20px;
     text-align: center;
+}
+
+@media (max-width: 700px) {
+    main {
+        grid-template-columns: minmax(0, 1fr);
+        padding: 16px;
+        margin: 16px auto;
+    }
 }

@@ -9,9 +9,12 @@ export function validateItem(item) {
         errors.push("Size is required.");
     }
 
-    if (!item.price || Number(item.price) <= 0) {
+    const price = Number(item.price);
+    if (!Number.isFinite(price) || price <= 0) {
         errors.push("Price must be greater than 0.");
     }
+
+    return errors;
 }
 
 export function calculateTotal(items) {

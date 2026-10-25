@@ -8,6 +8,9 @@ Pata Fits is a website for buying and selling thrifted clothes.You can browse it
 - Design (Figma): <>
 - Project board: <>
 
+## Wireframe
+[Open the Pata Fits wireframe in Figma](https://www.figma.com/design/yhvM5G09X0n5rjFCqqJc5K/Pata-Fits-Wireframe?node-id=47-11&t=LKVsSuGzrSbmTwZl-1)
+
 ## What the project does
 - Shows all clothing items and lets you filter by category
 - Lets you add, edit, and delete items

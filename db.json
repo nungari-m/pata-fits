@@ -2,7 +2,7 @@
     "items": [
         {"id": 1, "name": "Vintage Denim Jacket", "category": "Jackets", "size": "M", "price": 1500, "sold": false },
         {"id": 2, "name": "Floral Summer Dress", "category": "Dresses", "size": "S", "price": 900, "sold": false },
-        {"id": 3, "name": "Denim Trousers", "category": "Trousers", "size": "M", "price": 700, "sold": true},
+        {"id": 3, "name": "Denim Trousers", "category": "Trousers", "size": "M", "price": 700, "sold": true}
 
     ],
     "orders": []

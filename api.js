@@ -13,13 +13,13 @@ async function request(path, options = {}) {
 }
 
 //READ
-export function getItems() {
-    return request("/items");
+export function getItems(id) {
+    return request("/items/");
 }
 
 //CREATE
-export function updateItem(id, item) {
-    return request("/items/" + id, { method: "PUT", body: JSON.stringify(item) });
+export function addItem(id, item) {
+    return request("/items" + id, { method: "POST", body: JSON.stringify(item) });
 }
 
 //UPDATE 
@@ -45,12 +45,12 @@ export function getOrders() {
 
 //CREATE
 export function addOrder(order) {
-    return request("/orders", { method: "POST", body: JSON.stringify(order) });
+    return request("/orders/", { method: "POST", body: JSON.stringify(order) });
 }    
 
 //UPDATE 
 export function updateOrderStatus(id, status) {
-    return request("/orders" + id, { method: "PATCH", body: JSON.stringify({status}) });
+    return request("/orders/" + id, { method: "PATCH", body: JSON.stringify({status}) });
 }
 
 //DELETE

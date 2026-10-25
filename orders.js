@@ -137,7 +137,7 @@ function renderOrders(orders) {
             await deleteOrder(order.id);
             loadOrders();
         } catch (error) {
-            showOrderMessage("Could not delete order.", trues);
+            showOrderMessage("Could not delete order.", true);
         }
     });
 

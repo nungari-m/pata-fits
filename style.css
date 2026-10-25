@@ -1,9 +1,6 @@
-* {box-sizing: border-box;}
-
-:root {
-    --green: #0a331e;
-    --orange: #ce5803;
-    --cream: #f6f1e7;
+* {
+    box-sizing: border-box;
+    
 }
 
 body {
@@ -14,7 +11,7 @@ body {
 }
 
 header {
-    background: rgb(9, 70, 9);
+    background: maroon;
     color: white;
     padding: 20px;
     text-align: center;
@@ -22,16 +19,16 @@ header {
 
 
 main {
-    padding: 20px;
-    max-width: 800px;
-    margin: 0;
-    display: grid;
-    gap: 20px;
-    grid-template-columns: 1fr 1fr;
+    padding: 20px 40px;
+    align-items: start;
+    margin: 80PX;
+    display: flex;
+    gap: 100px;
+    grid-template-columns: 380px 1fr;
 }
 
 .card, .item, .order {
-    background: white;
+    background: whitesmoke;
     padding: 20px;
     border-radius: 8px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
@@ -72,22 +69,22 @@ button {
 }
 
 .primary {
-    background: rgb(9, 70, 9);
-    color: white;
+    background: maroon;
+    color: whitesmoke;
 }
 
 .secondary {
-    background: #ccc;
+    background: whitesmoke;
 }
 
 .buy {
-    background: rgb(9, 70, 9);
-    color: white;
+    background: maroon;
+    color: whitesmoke;
 }
 
 .danger {
     background: red;
-    color: white;
+    color: whitesmoke;
 }
 
 #item-list {
@@ -106,12 +103,12 @@ button {
 }
 
 .success {
-    color: rgb(33, 65, 33);
+    color: maroon;
 }
 
 footer {
-    background: rgb(9, 70, 9);
-    color: white;
+    background: maroon;
+    color: whitesmoke;
     padding: 20px;
     text-align: center;
 }

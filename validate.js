@@ -1,11 +1,11 @@
-export function validateItem() {
+export function validateItem(item) {
     const errors = [];
 
     if (!item.name || item.name.trim().length < 3) {
         errors.push("Name must be at least 3 characters.");        
     }
 
-    if (item.size || item.size.trim() === "") {
+    if (!item.size || item.size.trim() === "") {
         errors.push("Size is required.");
     }
 

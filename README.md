@@ -6,7 +6,7 @@ Pata Fits is a website for buying and selling thrifted clothes.You can browse it
 - Live site: https://nungari-m.github.io/pata-fits/
 - API: https://unsplash.onrender.com/items
 - Design (Figma): https://www.figma.com/design/yhvM5G09X0n5rjFCqqJc5K/Pata-Fits-Wireframe?node-id=47-11&t=LKVsSuGzrSbmTwZl-1
-- Project board: https://github.com/users/nungar-m/projects/1
+- Project board: https://github.com/users/nungari-m/projects/1
 
 ## Wireframe
 [Open the Pata Fits wireframe in Figma](https://www.figma.com/design/yhvM5G09X0n5rjFCqqJc5K/Pata-Fits-Wireframe?node-id=47-11&t=LKVsSuGzrSbmTwZl-1)
